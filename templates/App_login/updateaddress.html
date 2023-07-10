@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+<title> Blog | {% block title %} Address Update {% endblock title %} </title>
+{% block body %}
+<div class="container my-5">
+    <div class="row">
+        <h3> Welcome <span class="text-captalize"> {{request.user}} </span> </h3>
+    </div>
+    <div class="col-sm-8 offset-sm-1">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% for fm in form %}
+                {{fm.label_tag}} {{ fm }} <small class="text-danger">{{fm.errors | striptags }}</small> <br>
+            {% endfor %}
+            <div class="col-12 mt-3">
+                <button type="submit" class="btn btn-primary"> Update </button>
+                <a href="{% url 'App_login:address' %}" type="button" class="btn btn-danger"> Back </a>
+            </div>
+            {% if messages %}
+                {% for msg in messages %}
+                <div class="alert alert-{{msg.tags}}" role="alert">
+                    {{msg}}
+                </div>
+                {% endfor %} 
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock body %}

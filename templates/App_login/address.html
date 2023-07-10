@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+<title> Blog | {% block title %} Profile Information {% endblock title %} </title>
+{% block body %}
+<div class="container my-5">
+    <div class="row">
+        <h3> Welcome <span class="text-captalize"> {{request.user}} </span> </h3>
+        <div class="col-sm-2 border-end">
+            <ul class="list-unstyled">
+                <li class="d-grid"><a href="{% url 'App_login:profile' %}" class= "btn btn-primary "> Profile </a></li>
+                <li class="d-grid"><a href="{% url 'App_login:address' %}" class= "btn btn-success"> Address </a></li>
+                <li class="d-grid"><a href="{% url 'App_login:passwordchange' %}" class= "btn btn-warning"> Change Password </a></li>
+            </ul>
+        </div>
+        <div class="col-sm-8 offset-sm-1">
+            <div class="row">
+                {% for ad in add  %}
+                    <div class="col-sm-6">
+                        <div class="card m-2">
+                            <div class="card-body">
+                                <h3> Address {{forloop.counter}} </h3>
+                                {% if user.user_profile %}
+                                    <img src = '/media/{{ user.user_profile.profile_pic }}' class="rounded-circle" width="150px"> 
+                                    <a href="{% url 'App_login:change_pro_pic' %}" class="btn btn-primary btn-sm"> Change Profile pic </a>
+                                {% else %}
+                                    <img src = '/media/profile_pics/images.jpg' class="rounded-circle" width="150px">
+                                    <a href="{% url 'App_login:add_pro_pic' %}" class="btn btn-primary btn-sm"> Change Profile pic </a>
+                                {% endif %}
+                                <p> Name: {{ad.name}} </p>
+                                <p> Locality: {{ad.locality}} </p>
+                                <p> City: {{ad.city}} </p>
+                                <p> Mobile: {{ad.mobile}} </p>
+                                <p> Zipcode: {{ad.zipcode}} </p>
+                                <p> State: {{ad.state}} </p>
+                                <p class="text-center"> <a href="{% url 'App_login:address-update' pk=ad.id %}" type="button" class="btn btn-success"> Update</a></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

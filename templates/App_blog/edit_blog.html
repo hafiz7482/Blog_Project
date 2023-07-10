@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+<title> Blog | {% block title %} Edit Blog {% endblock title %} </title>
+{% block body %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-sm-8 offset-sm-1">
+            {% if blog.author == user %}
+            <form action="" method="POST" navalidate >
+            {% csrf_token %}
+            {% for fm in form %}
+                {{fm.label_tag}} {{ fm }} <small class="text-danger">{{fm.errors | striptags }}</small> <br>
+            {% endfor %}
+            <div class="col-12 mt-3">
+                <button type="submit" class="btn btn-primary"> Update </button>
+            </div>
+            {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <p class="alert alert-danger my-3">{{error}}</p>
+            {% endfor %}
+            {% endif %}
+            {% else %}
+            <p> Your are not allowed to view this page. 404 </p>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock body %}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- E Commerce theke copy -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'app/css/owl.carousel.min.css'%}" />
+    <link rel="stylesheet" href="{% static 'app/css/all.min.css'%}" />
+    <link rel="stylesheet" href="{% static 'app/css/style.css'%}" />
+
+    <!-- latest compailed minified css-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Proper js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proper.js/1.16.0/umd/proper.min.js"></script>
+    <!-- Latest compailed java script-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!-- Font awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <title> Blog | {% block title %} {% endblock title %} </title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'index' %}" > <img src="/media/logo.png" width="50px"/> </a>
+            </li>
+            {% if user.is_authenticated %}
+            <div class="nav-item dropdown ">
+                <a class="nav-link dropdown-toggle" href="#" id = "navbardrop" role="button" data-toggle="dropdown" > 
+                    @{{ user.username }}
+                </a>
+                <div class="dropdown-menu" >
+                    <a class="dropdown-item" href="{% url 'App_blog:create_blog' %}" > Write Blog </a>
+                    <a class="dropdown-item" href="{% url 'App_blog:my_blogs' %}" > My Blogs </a>
+                    <a class="dropdown-item" href="{% url 'App_login:profile' %}" > Profile </a>
+                    <hr>
+                    <a class="dropdown-item" href="{% url 'App_login:logout' %}" > Logout </a>
+                </div>
+            </div>
+            {% else %}
+            <li class="nav-item ">
+                <a class="nav-link" href="{% url 'App_login:signup' %}" > Sign Up </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{% url 'App_login:login' %}" > Login </a>
+            </li>
+            {% endif %}            
+        </ul>
+    </nav>
+    <div class="container" style="padding-top:20px">
+
+{% block body %} {% endblock body %}
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"> </script>
+    <script src="{% static 'app/js/all.min.js' %}"> </script>
+    <script src="{% static 'app/js/myscript.js' %}"> </script>
+    <script src="{% static 'app/js/owl.carousel.min.js' %}"> </script>
+</body>
+</html>

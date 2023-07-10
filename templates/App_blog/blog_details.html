@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+<title> Blog | {% block title %} Blog Details {% endblock title %} </title>
+{% block body %}
+    <div class="row">
+        <div class="col-sm-6">
+            <h2> {{ blog.blog_title }}</h2>
+            <h4> Posted By: {{ blog.author }}</h4>
+            <i><h6> Published On: {{blog.publish_date}} </h6></i>
+            <i><h6> Updated On: {{bolg.update_date}} </h6></i>
+            <h6> {{ blog.liked_blog.count }} Likes  |  {{ blog.blog_comment.count }} Comments</h6>
+        </div>
+        <div class="col-sm-6">
+            <img src="/media/{{blog.blog_image}}" width="100%">
+        </div>
+        <p> {{blog.blog_content|linebreaks}} </p>
+        <hr/>
+    </div>
+
+    {% if not Liked %}
+    <a href="{% url 'App_blog:liked' pk=blog.pk %}"> <i class="fa fa-thumbs-o-up fa-2x" aria-hidden="True"></i> </a>
+    {% else %}
+    <a href="{% url 'App_blog:unliked' pk=blog.pk %}"> <i class="fa fa-thumbs-o-down fa-2x" aria-hidden="True"></i> </a>
+    {% endif %} 
+
+    <div class="row">
+        <div class="col-sm-6">
+            <hr>
+            <h5> Comments: </h5>
+            {% for comment in blog.blog_comment.all %}
+                <p> <a href = "#" > {{ comment.user }}</a> {{ comment.comment }} <h6> {{ comment.comment_date }} </h6> <hr> </p>
+            {% endfor %}
+        </div>
+        <div class="col-sm-6">
+            <form action="" method="POST" navalidate >
+                {% csrf_token %}
+                {% for fm in comment_form %}
+                    {{fm.label_tag}} {{ fm }} <small class="text-danger">{{fm.errors | striptags }}</small> <br>
+                {% endfor %}
+                <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-primary btn-sm"> Comment </button>
+                </div>
+                {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <p class="alert alert-danger my-3">{{error}}</p>
+                {% endfor %}
+                {% endif %}
+            </form>
+        </div>
+    </div>
+    <br/> <br/> 
+{% endblock body %}
